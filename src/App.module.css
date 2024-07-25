@@ -1,0 +1,15 @@
+.container {
+	min-width: 300px;
+	background-color: rebeccapurple;
+}
+.online {
+	text-decoration: underline;
+}
+.offline {
+	background-color: blanchedalmond;
+}
+.icon {
+	width: 42px;
+	height: 42px;
+	color: red;
+}
