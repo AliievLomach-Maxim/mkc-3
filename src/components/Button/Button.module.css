@@ -1,0 +1,14 @@
+.primary {
+	background-color: brown;
+}
+.secondary {
+	background-color: yellow;
+	color: black;
+}
+.md {
+	min-width: 300px;
+}
+.sm {
+	max-width: 100px;
+	width: 100%;
+}
