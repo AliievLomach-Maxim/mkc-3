@@ -1,17 +1,5 @@
-import clsx from 'clsx'
-import styles from './Button.module.css'
-
-const Button = ({ severity, size, children }) => {
-	return (
-		<button
-			className={clsx(
-				severity === 'primary' ? styles.primary : styles.secondary,
-				{ [styles[size]]: size }
-			)}
-		>
-			{children}
-		</button>
-	)
+const Button = ({ children, onClick }) => {
+	return <button onClick={onClick}>{children}</button>
 }
 
 export default Button
