@@ -1,17 +1,65 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import posts from '../data.json'
 import Header from './components/Header/Header'
 import Pagination from './components/Pagination/Pagination'
 import Article from './components/Article/Article'
-import Button from './components/Button/Button'
+// import Button from './components/Button/Button'
+
+//  strict mode : mount > unmount > mount >....
+
+// import { useState } from 'react'
+// import Timer from './Timer'
+
+// import { useEffect } from 'react'
+
+// const initialClicks = () => {
+// 	// not use fetch()!!!!!!
+// 	const localClick = localStorage.getItem('click')
+// 	if (localClick !== null) {
+// 		return JSON.parse(localClick)
+// 	}
+// 	return 0
+// }
+
+const initialPage = () => {
+	const localPage = localStorage.getItem('curPage')
+	if (localPage !== null) {
+		return JSON.parse(localPage)
+	}
+	return 1
+}
 
 const App = () => {
-	const [page, setPage] = useState(1)
-	const [isShowArticle, setIsShowArticle] = useState(false)
-	const handleChangeShowArticle = () => {
-		setIsShowArticle(!isShowArticle)
-	}
+	// const [isShowTimer, setIsShowTimer] = useState(false)
+	// const [click, setClick] = useState(initialClicks)
+	// const [click2, setClick2] = useState(0)
+
+	// useEffect(() => {
+	// 	console.log('always')
+	// })
+	// // mount
+	// useEffect(() => {
+	// 	console.log('Mount')
+	// 	// fetch()
+	// 	// get local
+	// }, [])
+	// mount && update state
+	// useEffect(() => {
+	// 	// if (click === 0) return
+	// 	console.log('click1', click)
+	// 	localStorage.setItem('click', JSON.stringify(click))
+	// }, [click])
+
+	const [page, setPage] = useState(initialPage)
+	// const [isShowArticle, setIsShowArticle] = useState(false)
+	// const handleChangeShowArticle = () => {
+	// 	setIsShowArticle(!isShowArticle)
+	// }
 	const totalPages = posts.length
+
+	useEffect(() => {
+		localStorage.setItem('curPage', JSON.stringify(page))
+	}, [page])
 
 	const handleIncrementPage = () => {
 		if (page === totalPages) {
@@ -28,9 +76,14 @@ const App = () => {
 	}
 
 	const currentPost = posts[page - 1].body
+	// console.log('Render', click)
 
 	return (
 		<div>
+			{/* <button onClick={() => setIsShowTimer(!isShowTimer)}>toggle timer</button>
+			{isShowTimer && <Timer />} */}
+			{/* <button onClick={() => setClick(click + 1)}>click {click}</button> */}
+			{/* <button onClick={() => setClick2(click2 + 1)}>click2</button> */}
 			<Header>
 				<Pagination
 					increment={handleIncrementPage}
@@ -39,8 +92,8 @@ const App = () => {
 					totalPages={totalPages}
 				/>
 			</Header>
-			<Button onClick={handleChangeShowArticle}>toggle</Button>
-			{isShowArticle && <Article item={currentPost} />}
+			{/* <Button onClick={handleChangeShowArticle}>toggle</Button> */}
+			{/* {isShowArticle && <Article item={currentPost} />} */}
 			<Article item={currentPost} />
 		</div>
 	)
