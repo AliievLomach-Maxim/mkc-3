@@ -1,0 +1,32 @@
+.form {
+	display: flex;
+	flex-direction: column;
+
+	max-width: 300px;
+}
+
+.error {
+	color: red;
+	font-size: 14px;
+	font-weight: bold;
+}
+.errorField {
+	border: 2px solid red;
+}
+.label {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	position: relative;
+}
+input {
+	padding: 12px;
+	padding-inline-start: 24px;
+}
+.userNameIcon {
+	position: absolute;
+	top: 48px;
+	inset-inline-start: 6px;
+	width: 12px;
+	height: 12px;
+}

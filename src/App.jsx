@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import ControlledForm from './components/ControlledForm/ControlledForm'
+import FormikForm from './components/FormikForm/FormikForm'
 
 const App = () => {
 	const [user, setUser] = useState(null)
@@ -10,6 +11,7 @@ const App = () => {
 	return (
 		<div>
 			<ControlledForm createUser={createUser} />
+			<FormikForm createUser={createUser} />
 			<hr />
 			{user && <p>newUser: {user.userName}</p>}
 		</div>
