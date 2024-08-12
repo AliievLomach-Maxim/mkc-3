@@ -1,141 +1,70 @@
-import { useState } from 'react'
-import ControlledForm from './components/ControlledForm/ControlledForm'
-import FormikForm from './components/FormikForm/FormikForm'
+import { useEffect, useState } from 'react'
+import { fetchNews } from './api/api-news'
+import SearchForm from './components/SearchForm/SearchForm'
 
 const App = () => {
-	const [user, setUser] = useState(null)
-	const createUser = (data) => {
-		setUser(data)
-		console.log('data', data)
+	const [data, setData] = useState([])
+	const [page, setPage] = useState(1)
+	const [searchQuery, setSearchQuery] = useState('')
+	const [isLoading, setIsLoading] = useState(false)
+	const [error, setError] = useState(false)
+
+	const handleSearch = async (searchQuery) => {
+		setSearchQuery(searchQuery)
+		setPage(1)
+		setData([])
 	}
+
+	useEffect(() => {
+		if (!searchQuery) return
+
+		const fetchData = async () => {
+			try {
+				setIsLoading(true)
+				setError(false)
+				const data = await fetchNews(searchQuery, page)
+
+				setData((prevData) => {
+					return [...prevData, ...data]
+				})
+			} catch (error) {
+				setError(true)
+			} finally {
+				setIsLoading(false)
+			}
+		}
+		fetchData()
+	}, [page, searchQuery])
+
+	const handlePage = () => {
+		setPage(page + 1)
+	}
+
 	return (
 		<div>
-			<ControlledForm createUser={createUser} />
-			<FormikForm createUser={createUser} />
-			<hr />
-			{user && <p>newUser: {user.userName}</p>}
+			<SearchForm onSearch={handleSearch} />
+			{error && <p>oops!! some error...</p>}
+			{data.length > 0 && (
+				<ul>
+					{data.map((el) => (
+						<li key={el.objectID}>
+							<a href={el.url}>{el.title}</a>
+						</li>
+					))}
+				</ul>
+			)}
+			{isLoading && <p>Loading...</p>}
+			{data.length > 0 && <button onClick={handlePage}>Load more...</button>}
 		</div>
 	)
 }
 
 export default App
-// const App = () => {
-// 	const [text, setText] = useState('')
-// 	const [lang, setLang] = useState('en')
 
-// 	const handleChange = (e) => {
-// 		// if (e.target.value.includes('@')) return
-// 		// else
-// 		setText(e.target.value)
+// useEffect(() => {
+// 	const getData = async () => {
+// 		const data = await fetchNews()
+// 		setData(data)
 // 	}
-// 	const handleLang = (e) => {
-// 		setLang(e.target.value)
-// 	}
-
-// 	return (
-// 		<div>
-// 			<TextInput textValue={text} changeInput={handleChange} />
-// 			<p>{text}</p>
-// 			<hr />
-// 			<hr />
-// 			<SelectLang lang={lang} handleLang={handleLang} />
-// 			<p>Current Lang: {lang}</p>
-// 		</div>
-// 	)
-// }
-
-// export default App
-
-// document.addEventListener('input')
-// const App = () => {
-// 	const [user, setUser] = useState(null)
-// 	const [user2, setUser2] = useState(null)
-
-// 	const createUser = (data) => {
-// 		// role:guest
-// 		const newUser = {
-// 			...data,
-// 			role: 'guest',
-// 		}
-// 		setUser(newUser)
-// 	}
-
-// 	const createUser2 = (data) => {
-// 		// role:guest
-// 		const newUser = {
-// 			...data,
-// 			role: 'Admin',
-// 		}
-// 		setUser2(newUser)
-// 	}
-// 	return (
-// 		<div>
-// 			<UserForm createUser={createUser} />
-// 			{user && <p>{user.userName}</p>}
-// 			{user && <p>{user.role}</p>}
-// 			<hr />
-// 			<UserForm createUser={createUser2} />
-// 			{user2 && <p>{user2.userName}</p>}
-// 			{user2 && <p>{user2.role}</p>}
-// 		</div>
-// 	)
-// }
-
-// export default App
-
-// import { useEffect, useState } from 'react'
-// import posts from '../data.json'
-// import Header from './components/Header/Header'
-// import Pagination from './components/Pagination/Pagination'
-// import Article from './components/Article/Article'
-
-// const initialPage = () => {
-// 	const localPage = localStorage.getItem('curPage')
-// 	if (localPage !== null) {
-// 		return JSON.parse(localPage)
-// 	}
-// 	return 1
-// }
-
-// const App = () => {
-
-// 	const [page, setPage] = useState(initialPage)
-
-// 	const totalPages = posts.length
-
-// 	useEffect(() => {
-// 		localStorage.setItem('curPage', JSON.stringify(page))
-// 	}, [page])
-
-// 	const handleIncrementPage = () => {
-// 		if (page === totalPages) {
-// 			return
-// 		}
-// 		setPage(page + 1)
-// 	}
-
-// 	const handleDecrementPage = () => {
-// 		if (page === 1) {
-// 			return
-// 		}
-// 		setPage(page - 1)
-// 	}
-
-// 	const currentPost = posts[page - 1].body
-
-// 	return (
-// 		<div>
-// 			<Header>
-// 				<Pagination
-// 					increment={handleIncrementPage}
-// 					decrement={handleDecrementPage}
-// 					currentPage={page}
-// 					totalPages={totalPages}
-// 				/>
-// 			</Header>
-// 			<Article item={currentPost} />
-// 		</div>
-// 	)
-// }
-
-// export default App
+// 	getData()
+// }, [])
