@@ -1,70 +1,76 @@
-import { useEffect, useState } from 'react'
-import { fetchNews } from './api/api-news'
-import SearchForm from './components/SearchForm/SearchForm'
+import Header from './components/Header/Header'
+import MainContainer from './components/MainContainer/MainContainer'
+// import FormTestRef from './components/FormTestRef/FormTestRef'
+// import MemoTest from './components/MemoTest/MemoTest'
 
 const App = () => {
-	const [data, setData] = useState([])
-	const [page, setPage] = useState(1)
-	const [searchQuery, setSearchQuery] = useState('')
-	const [isLoading, setIsLoading] = useState(false)
-	const [error, setError] = useState(false)
-
-	const handleSearch = async (searchQuery) => {
-		setSearchQuery(searchQuery)
-		setPage(1)
-		setData([])
-	}
-
-	useEffect(() => {
-		if (!searchQuery) return
-
-		const fetchData = async () => {
-			try {
-				setIsLoading(true)
-				setError(false)
-				const data = await fetchNews(searchQuery, page)
-
-				setData((prevData) => {
-					return [...prevData, ...data]
-				})
-			} catch (error) {
-				setError(true)
-			} finally {
-				setIsLoading(false)
-			}
-		}
-		fetchData()
-	}, [page, searchQuery])
-
-	const handlePage = () => {
-		setPage(page + 1)
-	}
-
 	return (
 		<div>
-			<SearchForm onSearch={handleSearch} />
-			{error && <p>oops!! some error...</p>}
-			{data.length > 0 && (
-				<ul>
-					{data.map((el) => (
-						<li key={el.objectID}>
-							<a href={el.url}>{el.title}</a>
-						</li>
-					))}
-				</ul>
-			)}
-			{isLoading && <p>Loading...</p>}
-			{data.length > 0 && <button onClick={handlePage}>Load more...</button>}
+			<Header />
+			<MainContainer />
 		</div>
 	)
 }
 
-export default App
+// const App = () => {
+// 	// const [counter, setCounter] = useState(0)
 
-// useEffect(() => {
-// 	const getData = async () => {
-// 		const data = await fetchNews()
+// 	// const date = useRef(new Date())
+
+// 	return (
+// 		<div>
+// 			{/* <button onClick={() => setCounter(counter + 1)}>{counter}</button>
+// 			<p>{date.current.getTime()}</p> */}
+// 			{/* <FormTestRef /> */}
+// 			{/* <MemoTest /> */}
+// 		</div>
+// 	)
+// }
+
+export default App
+// import { useCallback, useEffect, useState } from 'react'
+// import MemoTest from './components/MemoTest/MemoTest'
+// import axios from 'axios'
+
+// const getFromApi = () => {
+// 	return axios.get('/')
+// }
+
+// const App = () => {
+// 	const [data, setData] = useState([])
+// 	const [click, setClick] = useState(0)
+
+// 	const getData = useCallback(async () => {
+// 		const { data } = await getFromApi()
 // 		setData(data)
+// 	}, [])
+
+// 	useEffect(() => {
+// 		getData()
+// 	}, [getData])
+
+// 	const handleClick = () => {
+// 		//
+
+// 		getData()
 // 	}
-// 	getData()
-// }, [])
+
+// 	const handleClick2 = () => {
+// 		setClick(click + 1)
+// 	}
+
+// 	return (
+// 		<div>
+// 			<button onClick={handleClick2}>Click</button>
+// 			<button onClick={handleClick}>Get again</button>
+// 			<ul>
+// 				{data.map((dataEl) => (
+// 					<li key={dataEl.id}>{dataEl.name}</li>
+// 				))}
+// 			</ul>
+// 			<MemoTest />
+// 		</div>
+// 	)
+// }
+
+// export default App
