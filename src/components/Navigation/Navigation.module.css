@@ -1,0 +1,15 @@
+.list {
+	display: flex;
+	gap: 12px;
+	list-style-type: none;
+}
+.list li a {
+	text-decoration: none;
+	color: black;
+}
+.list li:hover {
+	text-decoration: underline;
+}
+.list li a.isActive {
+	color: blueviolet;
+}
