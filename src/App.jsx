@@ -1,76 +1,28 @@
-import Header from './components/Header/Header'
-import MainContainer from './components/MainContainer/MainContainer'
-// import FormTestRef from './components/FormTestRef/FormTestRef'
-// import MemoTest from './components/MemoTest/MemoTest'
+import { Route, Routes } from 'react-router-dom'
+import Navigation from './components/Navigation/Navigation'
+import HomePage from './pages/HomePage/HomePage'
+import PostsPage from './pages/PostsPage/PostsPage'
+import PostDetails from './pages/PostDetails/PostDetails'
+import Owner from './components/Owner/Owner'
 
 const App = () => {
 	return (
 		<div>
-			<Header />
-			<MainContainer />
+			<Navigation />
+			<Routes>
+				<Route path='/' element={<HomePage />} />
+				<Route path='/posts' element={<PostsPage />} />
+				<Route path='/post/:id' element={<PostDetails />}>
+					<Route path='reactions' element={<div>reactions</div>} />
+					<Route path='owner/:ownerId' element={<Owner />} />
+				</Route>
+				<Route path='*' element={<div>404</div>} />
+				<Route path='/404' element={<div>404</div>} />
+			</Routes>
+			<br />
+			<footer>footer</footer>
 		</div>
 	)
 }
 
-// const App = () => {
-// 	// const [counter, setCounter] = useState(0)
-
-// 	// const date = useRef(new Date())
-
-// 	return (
-// 		<div>
-// 			{/* <button onClick={() => setCounter(counter + 1)}>{counter}</button>
-// 			<p>{date.current.getTime()}</p> */}
-// 			{/* <FormTestRef /> */}
-// 			{/* <MemoTest /> */}
-// 		</div>
-// 	)
-// }
-
 export default App
-// import { useCallback, useEffect, useState } from 'react'
-// import MemoTest from './components/MemoTest/MemoTest'
-// import axios from 'axios'
-
-// const getFromApi = () => {
-// 	return axios.get('/')
-// }
-
-// const App = () => {
-// 	const [data, setData] = useState([])
-// 	const [click, setClick] = useState(0)
-
-// 	const getData = useCallback(async () => {
-// 		const { data } = await getFromApi()
-// 		setData(data)
-// 	}, [])
-
-// 	useEffect(() => {
-// 		getData()
-// 	}, [getData])
-
-// 	const handleClick = () => {
-// 		//
-
-// 		getData()
-// 	}
-
-// 	const handleClick2 = () => {
-// 		setClick(click + 1)
-// 	}
-
-// 	return (
-// 		<div>
-// 			<button onClick={handleClick2}>Click</button>
-// 			<button onClick={handleClick}>Get again</button>
-// 			<ul>
-// 				{data.map((dataEl) => (
-// 					<li key={dataEl.id}>{dataEl.name}</li>
-// 				))}
-// 			</ul>
-// 			<MemoTest />
-// 		</div>
-// 	)
-// }
-
-// export default App
