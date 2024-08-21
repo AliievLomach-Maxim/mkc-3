@@ -1,13 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { fetchPosts } from '../../api/postsApi'
 import PostList from '../../components/PostList/PostList'
 import Error from '../../components/Error/Error'
 import Loading from '../../components/Loading/Loading'
+import { useSearchParams } from 'react-router-dom'
+import Filter from '../../components/Filter/Filter'
 
 const PostsPage = () => {
 	const [posts, setPosts] = useState([])
 	const [isLoading, setIsLoading] = useState(false)
 	const [error, setError] = useState(false)
+
+	const [params] = useSearchParams()
+
+	const filterValue = params.get('filter') ?? ''
 
 	useEffect(() => {
 		const getPost = async () => {
@@ -25,11 +31,20 @@ const PostsPage = () => {
 		getPost()
 	}, [])
 
+	const filteredPosts = useMemo(
+		() =>
+			posts.filter((el) =>
+				el.title.toLowerCase().includes(filterValue.toLowerCase())
+			),
+		[filterValue, posts]
+	)
+
 	return (
 		<div>
 			{isLoading && <Loading />}
 			{error && <Error />}
-			{posts.length > 0 && <PostList posts={posts} />}
+			<Filter />
+			{filteredPosts.length > 0 && <PostList posts={filteredPosts} />}
 		</div>
 	)
 }
