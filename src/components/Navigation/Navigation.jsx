@@ -17,6 +17,11 @@ const Navigation = () => {
 					</NavLink>
 				</li>
 				<li>
+					<NavLink className={generateClassNames} to='/balance'>
+						Balance
+					</NavLink>
+				</li>
+				<li>
 					<NavLink className={generateClassNames} to='/posts'>
 						Posts
 					</NavLink>
