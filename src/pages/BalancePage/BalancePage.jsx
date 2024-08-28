@@ -1,5 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { deposit, withdraw } from '../../store/balanceSlice'
+// import { depositAction, withdrawAction } from '../../store/balanceSlice'
+// import { deposit, withdraw } from '../../store/balanceSlice'
 
 const BalancePage = () => {
 	const dispatch = useDispatch()
