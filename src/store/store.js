@@ -1,23 +1,56 @@
-import { combineReducers, createStore } from 'redux'
-import { devToolsEnhancer } from '@redux-devtools/extension'
+// import { balanceReducer } from './balanceSlice'
 import { balanceReducer } from './balanceSlice'
 import { localReducer } from './localSlice'
+import { configureStore } from '@reduxjs/toolkit'
+import { todoReducer } from './todo/slice'
 
-const reducer = combineReducers({
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+
+const persistConfig = {
+	key: 'todo',
+	storage,
+	whitelist: ['todos'],
+}
+
+const persistedTodoReducer = persistReducer(persistConfig, todoReducer)
+
+const rootReducer = {
 	balance: balanceReducer,
 	local: localReducer,
+	todo: persistedTodoReducer,
+}
+
+export const store = configureStore({
+	reducer: rootReducer,
 })
 
-export const store = createStore(reducer, devToolsEnhancer())
+export const persistor = persistStore(store)
 
-// const initialState = {
-// 	balance: {
-// 		value: 10000,
-// 		a: 10,
-// 	},
-// 	local: {
-// 		lang: 'en',
-// 	},
+// // import { balanceReducer } from './balanceSlice'
+// import { balanceReducer } from './balanceSlice'
+// import { localReducer } from './localSlice'
+// import { combineReducers, configureStore } from '@reduxjs/toolkit'
+// import { todoReducer } from './todo/slice'
+
+// import { persistStore, persistReducer } from 'redux-persist'
+// import storage from 'redux-persist/lib/storage'
+
+// const persistConfig = {
+// 	key: 'todo',
+// 	storage,
 // }
 
-// reducer(undefined, { type: '@@redux/INIT3.g.c.8.u' })
+// const rootReducer = combineReducers({
+// 	balance: balanceReducer,
+// 	local: localReducer,
+// 	todo: todoReducer,
+// })
+
+// const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+// export const store = configureStore({
+// 	reducer: persistedReducer,
+// })
+
+// export const persistor = persistStore(store)

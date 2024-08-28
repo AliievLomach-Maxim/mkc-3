@@ -26,6 +26,11 @@ const Navigation = () => {
 						Posts
 					</NavLink>
 				</li>
+				<li>
+					<NavLink className={generateClassNames} to='/todo'>
+						Todo
+					</NavLink>
+				</li>
 			</ul>
 		</nav>
 	)
