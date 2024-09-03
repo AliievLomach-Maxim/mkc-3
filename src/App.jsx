@@ -8,6 +8,7 @@ import { lazy, Suspense } from 'react'
 import BalancePage from './pages/BalancePage/BalancePage'
 import Header from './components/Header/Header'
 import TodoPage from './pages/TodoPage/TodoPage'
+import { Toaster } from 'react-hot-toast'
 
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'))
 const PostsPage = lazy(() => import('./pages/PostsPage/PostsPage'))
@@ -17,6 +18,7 @@ const Owner = lazy(() => import('./components/Owner/Owner'))
 const App = () => {
 	return (
 		<div>
+			<Toaster />
 			<Header />
 			<Suspense fallback={<div>!!!!!!!!!!!!!!!LOADING!!!!!...</div>}>
 				<Routes>

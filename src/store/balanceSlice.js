@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 // export const depositAction = createAction('balance/deposit')
 // export const withdrawAction = createAction('balance/withdraw')
 
-// export const deposit = (value) => {
+// export const deposit =(value) => {
 // 	return {
 // 		type: 'balance/deposit',
 // 		payload: value,
