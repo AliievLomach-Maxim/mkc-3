@@ -1,5 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { fetchTodosOp, removeTodoOp, updateTodoOp } from './operations'
+import { selectSearch } from '../filterSlice'
 
 const initialState = {
 	todos: [],
@@ -52,3 +53,26 @@ const todoSlice = createSlice({
 })
 
 export const todoSliceReducer = todoSlice.reducer
+
+export const selectTodos = (state) => state.todo.todos
+export const selectLoading = (state) => state.todo.isLoading
+export const selectError = (state) => state.todo.error
+
+// export const selectFilteredTodos = (state) => {
+// 	const todos = selectTodos(state)
+// 	const filterValue = selectSearch(state)
+// 	console.log('select...')
+// 	return todos?.filter((el) =>
+// 		el.title.toLowerCase().includes(filterValue.toLowerCase())
+// 	)
+// }
+
+export const selectFilteredTodos = createSelector(
+	[selectTodos, selectSearch],
+	(todos, filterValue) => {
+		console.log('select...')
+		return todos?.filter((el) =>
+			el.title.toLowerCase().includes(filterValue.toLowerCase())
+		)
+	}
+)
